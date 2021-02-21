@@ -84,7 +84,7 @@ export class Game
         if((this._controller.keyDown.lmb || this._controller.keyDown.rmb) && this._player.shootCooldown === 0)
         {
             console.log('%cShoot', 'color: blue');
-            const newProjectile = new Projectile({x: this._player.x, y: this._player.y, z: this._player.z}, {x: this._player.rotX, y: this._player.rotY}, (this._controller.keyDown.rmb ? Projectile.TYPE_BLUE : Projectile.TYPE_ORANGE));
+            const newProjectile = new Projectile({x: this._player.x, y: this._player.y, z: this._player.z}, {x: this._player.rotX, y: this._player.rotY}, (this._controller.keyDown.rmb ? Projectile.TYPE_BLUE : Projectile.TYPE_ORANGE),  this._mapData);
             this._renderer.createProjectile(newProjectile.pos, newProjectile.rot, newProjectile.type);
 
             this._projectiles.push(newProjectile);

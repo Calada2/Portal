@@ -1,11 +1,12 @@
 import {Tools} from './Tools.js';
 import {Vector} from "./Vector.js";
+import {MapData} from "./MapData.js";
 
 export class Projectile
 {
     static TYPE_BLUE = 0;
     static TYPE_ORANGE = 1;
-    constructor(pos, rot, type)
+    constructor(pos, rot, type, mapData)
     {
         this.pos = {
             x: pos.x,
@@ -17,6 +18,15 @@ export class Projectile
             x: rot.x,
             y: rot.y
         }
+
+        this.previousCube = '-1|-1|-1';
+        this.currentCube = '-1|-1|-1';
+
+        this.mapData = mapData;
+        console.log(this.mapData);
+
+        this.destinationReached = false;
+        this.portalSide = -1;
 
 
 
@@ -31,8 +41,26 @@ export class Projectile
 
     move(delta)
     {
-        this.pos.x += this.moveVector.x / 150 * delta;
-        this.pos.y += this.moveVector.y / 150 * delta;
-        this.pos.z += this.moveVector.z / 150 * delta;
+        this.pos.x += this.moveVector.x / 100 * delta;
+        this.pos.y += this.moveVector.y / 100 * delta;
+        this.pos.z += this.moveVector.z / 100 * delta;
+        this.currentCube = Math.floor(this.pos.x) + '|' + Math.floor(this.pos.y) + '|' + Math.floor(this.pos.z);
+        if(this.currentCube !== this.previousCube)
+        {
+            this.changeBlock();
+        }
+    }
+
+    changeBlock()
+    {
+        const currentBlock = {
+            x: Math.floor(this.pos.x),
+            y: Math.floor(this.pos.y),
+            z: Math.floor(this.pos.z)
+        }
+        if(this.mapData.blockAt(currentBlock.x, currentBlock.y, currentBlock.z) === MapData.BLOCK_WALL)
+        {
+            this.moveVector =  new Vector(0,0,0);
+        }
     }
 }
