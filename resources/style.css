@@ -2,6 +2,11 @@
 {
     user-select: none;
 }
+body
+{
+    overflow: hidden;
+    background: black;
+}
 .fullsize
 {
     position: absolute;
@@ -17,19 +22,18 @@
     --z: 0;
     --rotX: 0;
     --rotY: 0;
-    --perspective: 700px;
-
-
+    --perspective: 50vh;
+    background: pink;
     perspective: var(--perspective);
     overflow: hidden;
 }
 #camera .scene
 {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 0;
-    height: 0;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     transform-style: preserve-3d;
     transform: rotateX(var(--rotY)) rotateY(var(--rotX)) translateX(var(--x)) translateY(var(--y)) translateZ(var(--z)) translateZ(var(--perspective));
     transform-origin: 50% 50% var(--perspective);
@@ -71,9 +75,8 @@
     left: calc(50% - 50px);
     bottom: calc(50% - 50px);
     transform-origin: 50px 50px;
-
     box-sizing: border-box;
-    border: 1px solid black;
+    border: 0.2px solid black;
 
     background: grey;
     background-image: url(concrete.jpg);
@@ -83,44 +86,76 @@
 }
 .orientation0
 {
-    transform: translateX(var(--x)) translateY(var(--y)) translateZ(var(--z)) rotateY(90deg);
+    /*left: unset;
+    right: calc(50% - 50px);
+    transform-origin: 50px calc(100% - 50px);*/
+
+    //transform: translateX(calc(var(--x) * -1)) translateY(var(--y)) translateZ(var(--z)) translateZ(0) rotateY(-90deg);
+    transform: translateX(var(--x)) translateY(var(--y)) translateZ(var(--z)) translateZ(-50px) translateX(100px) rotateY(90deg);
 }
 .orientation1
 {
-    transform:  translateX(var(--x)) translateY(var(--y)) translateZ(var(--z)) translateX(-100px) rotateY(90deg) ;
+    transform:  translateX(var(--x)) translateY(var(--y)) translateZ(var(--z)) translateZ(-50px) translateX(0px) rotateY(90deg) ;
+    filter: brightness(100%);
     /*filter: sepia(100%) hue-rotate(0deg); *//*yellow NOT good*/
 }
 
 .orientation2
 {
-    transform: translateX(var(--x)) translateY(var(--y)) translateZ(var(--z)) translateZ(-50px) translateX(-50px) rotateY(0deg) ;
+    transform: translateX(var(--x)) translateY(var(--y)) translateZ(var(--z)) translateZ(100px) translateX(50px) rotateY(0deg) ;
+    filter: brightness(97%);
     /*filter: sepia(100%) hue-rotate(180deg);*/ /*blue NOT good*/
 
 }
 
 .orientation3
 {
-    transform: translateX(var(--x)) translateY(var(--y)) translateZ(var(--z)) translateX(-50px) translateZ(50px) rotateY(0deg) ;
+    transform: translateX(var(--x)) translateY(var(--y)) translateZ(var(--z)) translateX(50px) translateZ(0) rotateY(0deg) ;
+    filter: brightness(94%);
 
 }
 
 .orientation4
 {
-    transform: translateX(var(--x)) translateY(var(--y)) translateZ(var(--z)) translateY(-50px) translateX(-50px) rotateY(90deg) rotateX(90deg) ;
-    filter: brightness(50%);
+    transform: translateX(var(--x)) translateY(var(--y)) translateZ(var(--z)) translateY(-50px) translateZ(-50px) translateX(50px) rotateY(90deg) rotateX(90deg) ;
+    filter: brightness(91%);
 
 }
 
 .orientation5
 {
-    transform: translateX(var(--x)) translateY(var(--y)) translateZ(var(--z)) translateY(50px) translateX(-50px) rotateY(90deg) rotateX(90deg) ;
+    transform: translateX(var(--x)) translateY(var(--y)) translateZ(var(--z)) translateY(50px) translateX(50px) translateZ(-50px) rotateY(90deg) rotateX(90deg) ;
+    filter: brightness(88%);
     /*filter: sepia(100%) hue-rotate(90deg);*/ /*pink NOT good*/
+
+}
+
+.portal
+{
+    --x: 300px;
+    --y: -100px;
+    --z: -799px;
+    --width: 100px;
+    --height: 200px;
+    --rot: 0;
+    position: absolute;
+    width: var(--width);
+    height: var(--height);
+    left: calc(50% - 50px);
+    bottom: calc(50% - 50px);
+    transform-origin: 50px 50px;
+
+    box-shadow: orangered 0 0 5px;
+    border-radius: 50%;
+    background: #ffffff;
+    transform: translateX(var(--x)) translateY(var(--y)) translateZ(var(--z)) rotateX(var(--rot));
 
 }
 
 #gui
 {
     z-index: 200;
+    //display: none;
 }
 #mousearea
 {

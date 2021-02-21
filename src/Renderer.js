@@ -7,6 +7,9 @@ export class Renderer {
         this._camera = container;
 
         this.buildScene();
+        //this.addPortal_proto();
+
+        //window.addEventListener('resize', ()=>document.getElementById('camera').style.setProperty('--prespective', window.innerHeight / 2 + 'px'));
 
         this.cssProperties =
             {
@@ -19,11 +22,20 @@ export class Renderer {
 
     }
 
+
     buildScene() {
         this._scene = document.createElement('div')
         this._scene.className = 'scene';
         this._camera.appendChild(this._scene);
 
+    }
+
+    addPortal_proto()
+    {
+        const portal = document.createElement('iframe');
+        portal.src = 'index.html?5';
+        portal.className = 'portal';
+        this._scene.appendChild(portal);
     }
 
     buildMap_proto(mapData) {
@@ -267,6 +279,7 @@ export class Renderer {
     renderSide(x,y,z,width,height,orientation) {
         const side = document.createElement('div');
         side.className = 'faceV2 orientation' + orientation;
+
         side.style.setProperty('--x', (x * 100) + 'px');
 
         if(orientation < 4)
@@ -274,7 +287,14 @@ export class Renderer {
         else
             side.style.setProperty('--y', -((y - (height - 1)) * 100) + 'px');
 
-        side.style.setProperty('--z', -(z * 100) + 'px');
+        if(orientation < 2)
+            side.style.setProperty('--z', ((width + z) * 100) + 'px');
+        else if(orientation < 4)
+            side.style.setProperty('--z', ((z) * 100) + 'px');
+        else
+            side.style.setProperty('--z', ((width + z) * 100) + 'px');
+
+
         side.style.setProperty('--width', (width * 100) + 'px');
         side.style.setProperty('--height', (height * 100) + 'px');
         this._scene.appendChild(side);

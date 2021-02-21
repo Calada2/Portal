@@ -68,8 +68,8 @@ export class Controller
     {
         if(this.mousetracking)
         {
-            this.rotation.x += (e.movementX / 100);
-            this.rotation.y -= (e.movementY / 100);
+            this.rotation.x += (e.movementX / 275);
+            this.rotation.y -= (e.movementY / 275);
         }
 
 
@@ -125,7 +125,7 @@ export class Controller
                 if(!this.keyDown.ascend)
                 {
                     this.keyDown.ascend = true;
-                    this.movement.y += 1;
+                    this.movement.y += -1;
                     this.movementUpdated();
                 }
                 break;
@@ -134,7 +134,7 @@ export class Controller
                 if(!this.keyDown.descend)
                 {
                     this.keyDown.descend = true;
-                    this.movement.y += -1;
+                    this.movement.y += 1;
                     this.movementUpdated();
                 }
                 break;
@@ -189,7 +189,7 @@ export class Controller
             case this.keybinds.ascend:
                 if(this.keyDown.ascend)
                 {
-                    this.movement.y -= 1;
+                    this.movement.y -= -1;
                     this.movementUpdated();
                 }
                 this.keyDown.ascend = false;
@@ -199,7 +199,7 @@ export class Controller
             case this.keybinds.descend:
                 if(this.keyDown.descend)
                 {
-                    this.movement.y -= -1;
+                    this.movement.y -= 1;
                     this.movementUpdated();
                 }
                 this.keyDown.descend = false;

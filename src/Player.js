@@ -3,11 +3,11 @@ import { Vector } from './Vector.js';
 export class Player
 {
     constructor() {
-        this.x = 0;
+        this.x = 5.5;
         this.y = 2;
-        this.z = 0;
+        this.z = 1.5;
 
-        this.rotX = 0;
+        this.rotX = 3.14;
         this.rotY = 0;
     }
 

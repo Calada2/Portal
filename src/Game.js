@@ -71,6 +71,7 @@ export class Game
         this._controller.resetRotation();
         this._renderer.updatePosition(this._player.getProperties());
 
+
         const this2 = this;
         window.requestAnimationFrame(function (){this2.loop()});
     }
