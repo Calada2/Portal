@@ -124,7 +124,6 @@ export class Renderer {
                                                     break loopB;
                                                 }
                                                 if (b === limitB - 1) {
-                                                    console.log('this happens');
                                                     rowComplete = true;
                                                 }
                                             }
@@ -343,8 +342,18 @@ export class Renderer {
 
     createProjectile(pos, rot, type)
     {
+        let extraClass = '';
+        if(type === Projectile.TYPE_BLUE)
+            extraClass = 'projectileBlue';
+        else if(type === Projectile.TYPE_ORANGE)
+            extraClass = 'projectileOrange';
+        else if(type === Projectile.TYPE_SHURIKEN)
+            extraClass = 'projectileShuriken';
+
+
         const elem = document.createElement('div');
-        elem.className = 'projectile ' + (type === Projectile.TYPE_BLUE ? 'projectileOrange' : 'projectileBlue');
+
+        elem.className = 'projectile ' + extraClass;
         elem.style.setProperty('--x', Tools.posToCSS(pos.x));
         elem.style.setProperty('--y', Tools.posToCSS(pos.y));
         elem.style.setProperty('--z', Tools.posToCSS(pos.z));

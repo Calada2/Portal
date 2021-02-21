@@ -6,6 +6,7 @@ export class Projectile
 {
     static TYPE_BLUE = 0;
     static TYPE_ORANGE = 1;
+    static TYPE_SHURIKEN = 999;
     constructor(pos, rot, type, mapData)
     {
         this.pos = {
@@ -23,7 +24,6 @@ export class Projectile
         this.currentCube = '-1|-1|-1';
 
         this.mapData = mapData;
-        console.log(this.mapData);
 
         this.destinationReached = false;
         this.portalSide = -1;
@@ -35,7 +35,7 @@ export class Projectile
 
         const yfactor = (1 - Math.abs(Math.sin(rot.y) ** 5));
         this.moveVector = new Vector( yfactor * Math.sin(rot.x), Math.sin(rot.y), yfactor * -Math.cos(rot.x));
-        console.log(this.moveVector);
+
 
     }
 

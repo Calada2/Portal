@@ -12,7 +12,6 @@ export class MapData
             y: blocks[0].length,
             z: blocks[0][0].length
         }
-        console.log(this.size);
     }
 
     updateAtPosition(x,y,z,type)

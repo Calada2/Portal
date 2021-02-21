@@ -147,6 +147,19 @@ body
     box-shadow: #ff5900 0 0 30px, #ff5900 0 0 25px;
 }
 
+.projectileShuriken
+{
+    background: url(shuriken.png);
+    background-size: 100% 100%;
+    transform:  translate3d(var(--x), calc(-1 * var(--y)), var(--z)) rotateY(var(--rotX)) rotateX(var(--rotY)) rotateY(100deg) scale(.1);
+    width: 200px;
+    height: 200px;
+    border-radius: 0;
+
+    left: calc(50% - 100px);
+    bottom: calc(50% - 100px);
+}
+
 .portal
 {
     --x: 300px;

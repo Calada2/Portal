@@ -81,10 +81,19 @@ export class Game
         }
 
         this._player.shootCooldown = Math.max(0, this._player.shootCooldown - delta);
-        if((this._controller.keyDown.lmb || this._controller.keyDown.rmb) && this._player.shootCooldown === 0)
+        if((this._controller.keyDown.lmb || this._controller.keyDown.rmb || this._controller.keyDown.mmb) && this._player.shootCooldown === 0)
         {
-            console.log('%cShoot', 'color: blue');
-            const newProjectile = new Projectile({x: this._player.x, y: this._player.y, z: this._player.z}, {x: this._player.rotX, y: this._player.rotY}, (this._controller.keyDown.rmb ? Projectile.TYPE_BLUE : Projectile.TYPE_ORANGE),  this._mapData);
+            let portalType
+            if(this._controller.keyDown.lmb)
+                portalType = Projectile.TYPE_BLUE;
+            else if(this._controller.keyDown.rmb)
+                portalType = Projectile.TYPE_ORANGE;
+            else if(this._controller.keyDown.mmb)
+                portalType = Projectile.TYPE_SHURIKEN;
+
+
+
+            const newProjectile = new Projectile({x: this._player.x, y: this._player.y, z: this._player.z}, {x: this._player.rotX, y: this._player.rotY}, portalType,  this._mapData);
             this._renderer.createProjectile(newProjectile.pos, newProjectile.rot, newProjectile.type);
 
             this._projectiles.push(newProjectile);
