@@ -86,39 +86,39 @@ body
 }
 .orientation0
 {
-    transform: translateX(var(--x)) translateY(var(--y)) translateZ(var(--z)) translateZ(-50px) translateX(100px) rotateY(90deg);
+    transform: translate3d(var(--x),var(--y),var(--z)) translate3d(100px, -50px, -50px)  rotateY(90deg);
     filter: brightness(100%);
 }
 .orientation1
 {
-    transform:  translateX(var(--x)) translateY(var(--y)) translateZ(var(--z)) translateZ(-50px) translateX(0px) rotateY(90deg) ;
+    transform: translate3d(var(--x),var(--y),var(--z)) translate3d(0, -50px, -50px) rotateY(90deg) ;
     filter: brightness(96%);
 }
 
 .orientation2
 {
-    transform: translateX(var(--x)) translateY(var(--y)) translateZ(var(--z)) translateZ(100px) translateX(50px) rotateY(0deg) ;
+    transform: translate3d(var(--x),var(--y),var(--z))  translate3d(50px, -50px, 100px) rotateY(0deg) ;
     filter: brightness(92%);
 
 }
 
 .orientation3
 {
-    transform: translateX(var(--x)) translateY(var(--y)) translateZ(var(--z)) translateX(50px) translateZ(0) rotateY(0deg) ;
+    transform: translate3d(var(--x),var(--y),var(--z))  translate3d(50px, -50px, 0)  rotateY(0deg) ;
     filter: brightness(88%);
 
 }
 
 .orientation4
 {
-    transform: translateX(var(--x)) translateY(var(--y)) translateZ(var(--z)) translateY(-50px) translateZ(-50px) translateX(50px) rotateY(90deg) rotateX(90deg) ;
+    transform: translate3d(var(--x),var(--y),var(--z)) translate3d(50px, -100px, -50px)  rotateY(90deg) rotateX(90deg) ;
     filter: brightness(84%);
 
 }
 
 .orientation5
 {
-    transform: translateX(var(--x)) translateY(var(--y)) translateZ(var(--z)) translateY(50px) translateX(50px) translateZ(-50px) rotateY(90deg) rotateX(90deg) ;
+    transform: translate3d(var(--x),var(--y),var(--z)) translate3d(50px, 0, -50px) rotateY(90deg) rotateX(90deg) ;
     filter: brightness(80%);
 
 }

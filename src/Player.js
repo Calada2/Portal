@@ -4,7 +4,7 @@ export class Player
 {
     constructor() {
         this.x = 5.5;
-        this.y = 2;
+        this.y = 2.5;
         this.z = 1.5;
 
         this.rotX = 3.14;
