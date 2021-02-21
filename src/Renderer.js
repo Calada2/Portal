@@ -1,10 +1,17 @@
 import {MapData} from "./MapData.js";
+import {Tools} from "./Tools.js";
+import{Projectile} from "./Projectile.js";
 
 export class Renderer {
-    constructor(container) {
-        this.containerElement = container;
 
+
+    constructor(container) {
+
+
+        this.containerElement = container;
         this._camera = container;
+
+        this.projectiles = [];
 
         this.buildScene();
         //this.addPortal_proto();
@@ -332,5 +339,27 @@ export class Renderer {
             this._camera.style.setProperty('--rotY', properties.rotY + 'rad');
         }
 
+    }
+
+    createProjectile(pos, rot, type)
+    {
+        const elem = document.createElement('div');
+        elem.className = 'projectile ' + (type === Projectile.TYPE_BLUE ? 'projectileOrange' : 'projectileBlue');
+        elem.style.setProperty('--x', Tools.posToCSS(pos.x));
+        elem.style.setProperty('--y', Tools.posToCSS(pos.y));
+        elem.style.setProperty('--z', Tools.posToCSS(pos.z));
+        elem.style.setProperty('--rotX', -rot.x + 'rad');
+        elem.style.setProperty('--rotY', -rot.y + 'rad');
+        this._scene.appendChild(elem);
+
+        this.projectiles.push(elem)
+    }
+
+    updateProjectile(id, pos)
+    {
+        const elem = this.projectiles[id];
+        elem.style.setProperty('--x', Tools.posToCSS(pos.x));
+        elem.style.setProperty('--y', Tools.posToCSS(pos.y));
+        elem.style.setProperty('--z', Tools.posToCSS(pos.z));
     }
 }

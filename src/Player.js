@@ -9,6 +9,8 @@ export class Player
 
         this.rotX = 3.14;
         this.rotY = 0;
+
+        this.shootCooldown = 0;
     }
 
     move(movement, rotation, delta)

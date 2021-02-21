@@ -3,6 +3,7 @@ import {MapData} from "./MapData.js";
 import {Renderer} from "./Renderer.js";
 import {Controller} from "./Controller.js";
 import {Player} from "./Player.js";
+import {Projectile} from "./Projectile.js";
 
 export class Game
 {
@@ -16,6 +17,8 @@ export class Game
         this._controller = new Controller(document.querySelector('#camera'));
 
         this._player = new Player();
+
+        this._projectiles = [];
 
         this._previousTimestamp = Date.now();
 
@@ -64,13 +67,30 @@ export class Game
     loop()
     {
         const currentTimestamp = Date.now();
-        const delta = this._previousTimestamp - currentTimestamp;
+        const delta = currentTimestamp - this._previousTimestamp;
         this._previousTimestamp = currentTimestamp;
 
         this._player.move(this._controller.movement, this._controller.rotation, delta)
         this._controller.resetRotation();
         this._renderer.updatePosition(this._player.getProperties());
 
+        for(let i = 0; i < this._projectiles.length; ++i)
+        {
+            this._projectiles[i].move(delta);
+            this._renderer.updateProjectile(i , this._projectiles[i].pos);
+        }
+
+        this._player.shootCooldown = Math.max(0, this._player.shootCooldown - delta);
+        if((this._controller.keyDown.lmb || this._controller.keyDown.rmb) && this._player.shootCooldown === 0)
+        {
+            console.log('%cShoot', 'color: blue');
+            const newProjectile = new Projectile({x: this._player.x, y: this._player.y, z: this._player.z}, {x: this._player.rotX, y: this._player.rotY}, (this._controller.keyDown.rmb ? Projectile.TYPE_BLUE : Projectile.TYPE_ORANGE));
+            this._renderer.createProjectile(newProjectile.pos, newProjectile.rot, newProjectile.type);
+
+            this._projectiles.push(newProjectile);
+
+            this._player.shootCooldown = 500;
+        }
 
         const this2 = this;
         window.requestAnimationFrame(function (){this2.loop()});

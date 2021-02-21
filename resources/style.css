@@ -76,7 +76,7 @@ body
     bottom: calc(50% - 50px);
     transform-origin: 50px 50px;
     box-sizing: border-box;
-    border: 0.2px solid black;
+    //border: 1px solid black;
 
     background: grey;
     background-image: url(concrete.jpg);
@@ -86,48 +86,65 @@ body
 }
 .orientation0
 {
-    /*left: unset;
-    right: calc(50% - 50px);
-    transform-origin: 50px calc(100% - 50px);*/
-
-    //transform: translateX(calc(var(--x) * -1)) translateY(var(--y)) translateZ(var(--z)) translateZ(0) rotateY(-90deg);
     transform: translateX(var(--x)) translateY(var(--y)) translateZ(var(--z)) translateZ(-50px) translateX(100px) rotateY(90deg);
+    filter: brightness(100%);
 }
 .orientation1
 {
     transform:  translateX(var(--x)) translateY(var(--y)) translateZ(var(--z)) translateZ(-50px) translateX(0px) rotateY(90deg) ;
-    filter: brightness(100%);
-    /*filter: sepia(100%) hue-rotate(0deg); *//*yellow NOT good*/
+    filter: brightness(96%);
 }
 
 .orientation2
 {
     transform: translateX(var(--x)) translateY(var(--y)) translateZ(var(--z)) translateZ(100px) translateX(50px) rotateY(0deg) ;
-    filter: brightness(97%);
-    /*filter: sepia(100%) hue-rotate(180deg);*/ /*blue NOT good*/
+    filter: brightness(92%);
 
 }
 
 .orientation3
 {
     transform: translateX(var(--x)) translateY(var(--y)) translateZ(var(--z)) translateX(50px) translateZ(0) rotateY(0deg) ;
-    filter: brightness(94%);
+    filter: brightness(88%);
 
 }
 
 .orientation4
 {
     transform: translateX(var(--x)) translateY(var(--y)) translateZ(var(--z)) translateY(-50px) translateZ(-50px) translateX(50px) rotateY(90deg) rotateX(90deg) ;
-    filter: brightness(91%);
+    filter: brightness(84%);
 
 }
 
 .orientation5
 {
     transform: translateX(var(--x)) translateY(var(--y)) translateZ(var(--z)) translateY(50px) translateX(50px) translateZ(-50px) rotateY(90deg) rotateX(90deg) ;
-    filter: brightness(88%);
-    /*filter: sepia(100%) hue-rotate(90deg);*/ /*pink NOT good*/
+    filter: brightness(80%);
 
+}
+
+
+.projectile
+{
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    position: absolute;
+    left: calc(50% - 10px);
+    bottom: calc(50% - 10px);
+    transform: translate3d(var(--x), calc(-1 * var(--y)), var(--z)) rotateY(var(--rotX)) rotateX(var(--rotY));
+}
+
+.projectileBlue
+{
+    background: #d6f9ff;
+    box-shadow: blue 0 0 30px, blue 0 0 25px;
+}
+
+.projectileOrange
+{
+    background: #fff1e9;
+    box-shadow: #ff5900 0 0 30px, #ff5900 0 0 25px;
 }
 
 .portal

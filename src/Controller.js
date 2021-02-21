@@ -13,7 +13,10 @@ export class Controller
             backward: false,
             ascend: false,
             descend: false,
-            jump: false
+            jump: false,
+            lmb: false,
+            rmb: false,
+            mmb: false
         }
 
         this.movement = {
@@ -26,6 +29,8 @@ export class Controller
 
         window.addEventListener('keydown', (e) => {this.keyDownEvent(e.code)});
         window.addEventListener('keyup', (e) => {this.keyUpEvent(e.code)});
+        window.addEventListener('mousedown', (e) => {this.onMouseDown(e.button)});
+        window.addEventListener('mouseup', (e) => {this.onMouseUp(e.button)});
 
 
         this.mousetracking = false;
@@ -71,9 +76,48 @@ export class Controller
             this.rotation.x += (e.movementX / 275);
             this.rotation.y -= (e.movementY / 275);
         }
+    }
 
+    onMouseDown(button)
+    {
+        switch (button)
+        {
+            case 0:
 
+                this.keyDown.lmb = true;
+                break;
 
+            case 1:
+
+                this.keyDown.mmb = true;
+                break;
+
+            case 2:
+
+                this.keyDown.rmb = true;
+                break;
+        }
+    }
+
+    onMouseUp(button)
+    {
+        switch (button)
+        {
+            case 0:
+
+                this.keyDown.lmb = false;
+                break;
+
+            case 1:
+
+                this.keyDown.mmb = false;
+                break;
+
+            case 2:
+
+                this.keyDown.rmb = false;
+                break;
+        }
     }
 
     resetRotation()
@@ -89,7 +133,7 @@ export class Controller
                 if(!this.keyDown.left)
                 {
                     this.keyDown.left = true;
-                    this.movement.x += 1;
+                    this.movement.x += -1;
                     this.movementUpdated();
                 }
                 break;
@@ -98,7 +142,7 @@ export class Controller
                 if(!this.keyDown.right)
                 {
                     this.keyDown.right = true;
-                    this.movement.x += -1;
+                    this.movement.x += 1;
                     this.movementUpdated();
                 }
                 break;
@@ -107,7 +151,7 @@ export class Controller
                 if(!this.keyDown.forward)
                 {
                     this.keyDown.forward = true;
-                    this.movement.z += 1;
+                    this.movement.z += -1;
                     this.movementUpdated();
                 }
                 break;
@@ -116,7 +160,7 @@ export class Controller
                 if(!this.keyDown.backward)
                 {
                     this.keyDown.backward = true;
-                    this.movement.z += -1;
+                    this.movement.z += 1;
                     this.movementUpdated();
                 }
                 break;
@@ -125,7 +169,7 @@ export class Controller
                 if(!this.keyDown.ascend)
                 {
                     this.keyDown.ascend = true;
-                    this.movement.y += -1;
+                    this.movement.y += 1;
                     this.movementUpdated();
                 }
                 break;
@@ -134,7 +178,7 @@ export class Controller
                 if(!this.keyDown.descend)
                 {
                     this.keyDown.descend = true;
-                    this.movement.y += 1;
+                    this.movement.y += -1;
                     this.movementUpdated();
                 }
                 break;
@@ -149,7 +193,7 @@ export class Controller
 
                 if(this.keyDown.left)
                 {
-                    this.movement.x -= 1;
+                    this.movement.x -= -1;
                     this.movementUpdated();
                 }
                 this.keyDown.left = false;
@@ -159,7 +203,7 @@ export class Controller
             case this.keybinds.right:
                 if(this.keyDown.right)
                 {
-                    this.movement.x -= -1;
+                    this.movement.x -= 1;
                     this.movementUpdated();
                 }
                 this.keyDown.right = false;
@@ -169,7 +213,7 @@ export class Controller
             case this.keybinds.forward:
                 if(this.keyDown.forward)
                 {
-                    this.movement.z -= 1;
+                    this.movement.z -= -1;
                     this.movementUpdated();
                 }
                 this.keyDown.forward = false;
@@ -179,7 +223,7 @@ export class Controller
             case this.keybinds.backward:
                 if(this.keyDown.backward)
                 {
-                    this.movement.z -= -1;
+                    this.movement.z -= 1;
                     this.movementUpdated();
                 }
                 this.keyDown.backward = false;
@@ -189,7 +233,7 @@ export class Controller
             case this.keybinds.ascend:
                 if(this.keyDown.ascend)
                 {
-                    this.movement.y -= -1;
+                    this.movement.y -= 1;
                     this.movementUpdated();
                 }
                 this.keyDown.ascend = false;
@@ -199,7 +243,7 @@ export class Controller
             case this.keybinds.descend:
                 if(this.keyDown.descend)
                 {
-                    this.movement.y -= 1;
+                    this.movement.y -= -1;
                     this.movementUpdated();
                 }
                 this.keyDown.descend = false;
