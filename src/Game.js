@@ -82,8 +82,14 @@ export class Game
 
             if(proj.destinationReached)
             {
+                if(proj.portalSide > -1 && proj.type !== Projectile.TYPE_SHURIKEN)
+                {
+                    this._renderer.placePortal(proj.type, proj.currentBlock, proj.portalSide);
+                }
+
                 console.log(proj.portalSide);
-                this._renderer.removeProjectile(i);
+                if(proj.type !== Projectile.TYPE_SHURIKEN)
+                    this._renderer.removeProjectile(i);
                 delete this._projectiles[i];
             }
 

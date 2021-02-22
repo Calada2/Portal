@@ -160,6 +160,30 @@ body
     bottom: calc(50% - 100px);
 }
 
+.portalV2
+{
+    --rot: 0;
+    width: 280px;
+    height: 560px;
+    position: absolute;
+    border-radius: 50%;
+    left: calc(50% - 140px);
+    bottom: calc(50% - 130px);
+    background: #e7e7e7;
+    transform: translate3d(var(--x),var(--y),var(--z)) translate3d(50px, 50px, 50px) rotateY(var(--rot)) translateZ(51px) scale(.33333333);
+    border: none;
+}
+.portalBlue
+{
+    box-shadow: blue 0 0 40px, blue 0 0 30px;
+    background: #e9f7ff;
+}
+.portalOrange
+{
+    box-shadow: darkorange 0 0 40px, darkorange 0 0 30px;
+    background: #fff2e0;
+}
+
 .portal
 {
     --x: 300px;

@@ -14,10 +14,12 @@ export class Renderer {
         this.projectiles = [];
 
         this.buildScene();
-        //this.addPortal_proto();
         this.addJozsi_proto();
 
-        //window.addEventListener('resize', ()=>document.getElementById('camera').style.setProperty('--prespective', window.innerHeight / 2 + 'px'));
+        this.portals = [
+            this.createPortal(0),
+            this.createPortal(1)
+        ];
 
         this.cssProperties =
             {
@@ -28,6 +30,44 @@ export class Renderer {
                 rotY: 0
             }
 
+    }
+
+    createPortal(type)
+    {
+        const elem = document.createElement('iframe');
+        elem.className = 'portalV2 ' + (type === 0 ? 'portalBlue' : 'portalOrange');
+        this._scene.appendChild(elem);
+        elem.hidden = true;
+        return elem;
+    }
+
+    placePortal(id, pos, angle)
+    {
+        const portal = this.portals[id];
+        portal.style.setProperty('--x', Tools.posToCSS(pos.x));
+        portal.style.setProperty('--y', Tools.posToCSS(-pos.y));
+        portal.style.setProperty('--z', Tools.posToCSS(pos.z));
+        portal.hidden = false;
+
+        switch (angle)
+        {
+            case 0:
+                portal.style.setProperty('--rot', '180deg');
+                break;
+
+            case 1:
+                portal.style.setProperty('--rot', 0);
+                break;
+
+            case 2:
+                portal.style.setProperty('--rot', '-90deg');
+                break;
+
+            case 3:
+                portal.style.setProperty('--rot', '90deg');
+                break;
+
+        }
     }
 
 

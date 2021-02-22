@@ -70,6 +70,8 @@ export class Projectile
         {
             this.moveVector =  new Vector(0,0,0);
 
+            this.currentBlock = currentBlock;
+
             if(currentBlock.z > previousBlock.z)
             {
                 this.portalSide = 0;
