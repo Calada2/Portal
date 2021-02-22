@@ -74,10 +74,19 @@ export class Game
         this._controller.resetRotation();
         this._renderer.updatePosition(this._player.getProperties());
 
-        for(let i = 0; i < this._projectiles.length; ++i)
+        for(let i = 0; i < this._projectiles.length; ++i) if(this._projectiles[i] !== undefined)
         {
-            this._projectiles[i].move(delta);
+            const proj = this._projectiles[i]
+            proj.move(delta);
             this._renderer.updateProjectile(i , this._projectiles[i].pos);
+
+            if(proj.destinationReached)
+            {
+                console.log(proj.portalSide);
+                this._renderer.removeProjectile(i);
+                delete this._projectiles[i];
+            }
+
         }
 
         this._player.shootCooldown = Math.max(0, this._player.shootCooldown - delta);

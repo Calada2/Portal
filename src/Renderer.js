@@ -15,6 +15,7 @@ export class Renderer {
 
         this.buildScene();
         //this.addPortal_proto();
+        this.addJozsi_proto();
 
         //window.addEventListener('resize', ()=>document.getElementById('camera').style.setProperty('--prespective', window.innerHeight / 2 + 'px'));
 
@@ -42,6 +43,14 @@ export class Renderer {
         const portal = document.createElement('iframe');
         portal.src = 'index.html?5';
         portal.className = 'portal';
+        this._scene.appendChild(portal);
+    }
+
+    addJozsi_proto()
+    {
+        const portal = document.createElement('div');
+
+        portal.className = 'jozsi';
         this._scene.appendChild(portal);
     }
 
@@ -370,5 +379,12 @@ export class Renderer {
         elem.style.setProperty('--x', Tools.posToCSS(pos.x));
         elem.style.setProperty('--y', Tools.posToCSS(pos.y));
         elem.style.setProperty('--z', Tools.posToCSS(pos.z));
+    }
+
+    removeProjectile(id)
+    {
+        const proj = this.projectiles[id];
+        proj.parentElement.removeChild(proj);
+        delete this.projectiles[id];
     }
 }

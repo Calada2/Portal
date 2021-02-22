@@ -57,10 +57,43 @@ export class Projectile
             x: Math.floor(this.pos.x),
             y: Math.floor(this.pos.y),
             z: Math.floor(this.pos.z)
-        }
+        };
+
+        const previousCubeNums = this.previousCube.split('|').map(x=>Number(x));
+        const previousBlock = {
+            x: previousCubeNums[0],
+            y: previousCubeNums[1],
+            z: previousCubeNums[2]
+        };
+
         if(this.mapData.blockAt(currentBlock.x, currentBlock.y, currentBlock.z) === MapData.BLOCK_WALL)
         {
             this.moveVector =  new Vector(0,0,0);
+
+            if(currentBlock.z > previousBlock.z)
+            {
+                this.portalSide = 0;
+            }
+            else if(currentBlock.z < previousBlock.z)
+            {
+                this.portalSide = 1;
+            }
+            else if(currentBlock.x > previousBlock.x)
+            {
+                this.portalSide = 2;
+            }
+            else if(currentBlock.x < previousBlock.x)
+            {
+                this.portalSide = 3;
+            }
+
+            this.destinationReached = true;
+
+            this.previousCube = this.currentCube;
+        }
+        else
+        {
+            this.previousCube = this.currentCube;
         }
     }
 }

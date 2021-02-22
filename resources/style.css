@@ -181,7 +181,17 @@ body
     transform: translateX(var(--x)) translateY(var(--y)) translateZ(var(--z)) rotateX(var(--rot));
 
 }
-
+.jozsi
+{
+    height: 600px;
+    width: 400px;
+    position: absolute;
+    left: calc(50% - 200px);
+    bottom: calc(50% - 300px);
+    background-image: url(jozsi.png);
+    background-size: 100% 100%;
+    transform: translateY(-170px) translateZ(400px) translateX(400px) scale(.2);
+}
 #gui
 {
     z-index: 200;
