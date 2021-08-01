@@ -214,7 +214,7 @@ body
     bottom: calc(50% - 300px);
     background-image: url(jozsi.png);
     background-size: 100% 100%;
-    transform: translateY(-170px) translateZ(400px) translateX(400px) scale(.2);
+    transform: translateY(-170px) translateZ(400px) translateX(500px) scale(.2);
 }
 #gui
 {

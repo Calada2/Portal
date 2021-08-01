@@ -14,12 +14,31 @@ export class Renderer {
         this.projectiles = [];
 
         this.buildScene();
-        this.addJozsi_proto();
+        //this.addJozsi_proto();
 
         this.portals = [
             this.createPortal(0),
             this.createPortal(1)
         ];
+
+        this.portalPositions = [
+            {
+                x: 0,
+                y: 0,
+                z: 0,
+                side: 0
+            },
+            {
+                x: 0,
+                y: 0,
+                z: 0,
+                side: 0
+            }
+        ]
+
+
+
+
 
         this.cssProperties =
             {
@@ -38,6 +57,16 @@ export class Renderer {
         elem.className = 'portalV2 ' + (type === 0 ? 'portalBlue' : 'portalOrange');
         this._scene.appendChild(elem);
         elem.hidden = true;
+
+        const this2 = this;
+
+        elem.onload = function(){
+            this.contentWindow.document.body.appendChild(this2._camera.cloneNode(true));
+            this.contentWindow.document.body.appendChild(document.getElementById('styles').cloneNode(true));
+
+        }
+
+
         return elem;
     }
 
@@ -48,6 +77,11 @@ export class Renderer {
         portal.style.setProperty('--y', Tools.posToCSS(-pos.y));
         portal.style.setProperty('--z', Tools.posToCSS(pos.z));
         portal.hidden = false;
+
+        this.portalPositions[id].x = pos.x;
+        this.portalPositions[id].y = pos.y;
+        this.portalPositions[id].z = pos.z;
+        this.portalPositions[id].side = angle;
 
         switch (angle)
         {
@@ -387,6 +421,40 @@ export class Renderer {
             this._camera.style.setProperty('--rotY', properties.rotY + 'rad');
         }
 
+        this.updatePortalInside();
+    }
+
+    updatePortalInside()
+    {
+        for(let i = 0; i < this.portals.length; ++i)
+        {
+
+            const dif = {
+                px: 0,
+                py: 0,
+                p: 0
+            }
+            const camera = this.portals[i].contentWindow.document.getElementById('camera');
+            switch(this.portalPositions[i].side)
+            {
+                case 0:
+
+                    dif.px = -(this.cssProperties.x - .5 - this.portalPositions[i].x);
+                    dif.py = -(this.cssProperties.y - 2 - this.portalPositions[i].y);
+                    dif.p = Math.abs(this.portalPositions[i].z - this.cssProperties.z);
+
+                    break;
+            }
+
+
+            if(camera)
+            {
+                camera.style.perspectiveOrigin = Tools.posToCSS(dif.px * 3) + ' ' + Tools.posToCSS(dif.py * 3);
+                camera.style.perspective = Tools.posToCSS(dif.p * 3);
+            }
+
+
+        }
     }
 
     createProjectile(pos, rot, type)

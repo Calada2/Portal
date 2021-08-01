@@ -4,6 +4,7 @@ import {Renderer} from "./Renderer.js";
 import {Controller} from "./Controller.js";
 import {Player} from "./Player.js";
 import {Projectile} from "./Projectile.js";
+import {Portal} from "./Portal.js";
 
 export class Game
 {
@@ -21,6 +22,11 @@ export class Game
         this._projectiles = [];
 
         this._previousTimestamp = Date.now();
+
+        this._portals = [
+            new Portal(Portal.TYPE_BLUE),
+            new Portal(Portal.TYPE_ORANGE)
+        ];
 
         this.loop();
 
@@ -64,6 +70,12 @@ export class Game
 
     }
 
+    placePortal(type, block, side)
+    {
+        this._portals[type].updatePosition(block, side);
+        this._renderer.placePortal(type, block, side);
+    }
+
     loop()
     {
         const currentTimestamp = Date.now();
@@ -84,7 +96,7 @@ export class Game
             {
                 if(proj.portalSide > -1 && proj.type !== Projectile.TYPE_SHURIKEN)
                 {
-                    this._renderer.placePortal(proj.type, proj.currentBlock, proj.portalSide);
+                    this.placePortal(proj.type, proj.currentBlock, proj.portalSide);
                 }
 
                 console.log(proj.portalSide);
