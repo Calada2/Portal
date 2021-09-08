@@ -28,7 +28,7 @@ export class MapData
     blockAt(x,y,z)
     {
         let block = MapData.BLOCK_VOID;
-
+        //console.log(x,y,z);
         if(this.blocks[x] && this.blocks[x][y] && this.blocks[x][y][z] !== undefined)
             block = this.blocks[x][y][z];
 

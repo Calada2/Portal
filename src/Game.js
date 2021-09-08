@@ -19,6 +19,8 @@ export class Game
 
         this._player = new Player();
 
+        this._controller.addJumpEvent(() => this._player.jump());
+
         this._projectiles = [];
 
         this._previousTimestamp = Date.now();
@@ -82,7 +84,7 @@ export class Game
         const delta = currentTimestamp - this._previousTimestamp;
         this._previousTimestamp = currentTimestamp;
 
-        this._player.move(this._controller.movement, this._controller.rotation, delta)
+        this._player.move(this._controller.movement, this._controller.rotation, delta, this._mapData)
         this._controller.resetRotation();
         this._renderer.updatePosition(this._player.getProperties());
 

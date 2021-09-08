@@ -79,7 +79,7 @@ body
     //border: 1px solid black;
 
     background: grey;
-    background-image: url(concrete.jpg);
+    background-image: url(texture.png);
     background-size: 100px 100px;
 
     /*backface-visibility: hidden;*/

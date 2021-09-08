@@ -48,6 +48,11 @@ export class Controller
 
     }
 
+    addJumpEvent(funct)
+    {
+        this._onJump = funct;
+    }
+
     createKeyBinds()
     {
         this.keybinds = {
@@ -181,6 +186,13 @@ export class Controller
                     this.movement.y += -1;
                     this.movementUpdated();
                 }
+                break;
+
+            case this.keybinds.jump:
+
+                if(this._onJump)
+                    this._onJump();
+
                 break;
         }
     }
