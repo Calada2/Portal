@@ -14,7 +14,8 @@ export class Game
         this.buildTestMap();
         this._renderer = new Renderer(document.querySelector('#camera'));
         //this._renderer.buildMap_proto(this._mapData);
-        this._renderer.buildMap(this._mapData);
+        this._renderer.loadMap(this._mapData);
+        this._renderer.createPortals();
         this._controller = new Controller(document.querySelector('#camera'));
 
         this._player = new Player();
@@ -31,6 +32,8 @@ export class Game
         ];
 
         this.loop();
+
+        window.game = this;
 
 
     }
@@ -68,6 +71,7 @@ export class Game
         this._mapData.updateAtPosition(4,4,5,MapData.BLOCK_WALL);
 
         this._mapData.updateAtPosition(1,1,1,MapData.BLOCK_WALL);
+        this._mapData.updateAtPosition(1,4,1,MapData.BLOCK_WALL);
         this._mapData.updateAtPosition(8,2,8,MapData.BLOCK_WALL);
 
     }
@@ -75,13 +79,15 @@ export class Game
     placePortal(type, block, side)
     {
         this._portals[type].updatePosition(block, side);
-        this._renderer.placePortal(type, block, side);
+        this._renderer.placePortal(type, block, side, this._mapData, this._portals[type !== Portal.TYPE_BLUE ? Portal.TYPE_BLUE : Portal.TYPE_ORANGE]);
+        this._renderer.refrestPortalInsides(this._portals, this._mapData)
     }
 
     loop()
     {
+
         const currentTimestamp = Date.now();
-        const delta = currentTimestamp - this._previousTimestamp;
+        const delta = Math.min(1000, currentTimestamp - this._previousTimestamp);
         this._previousTimestamp = currentTimestamp;
 
         this._player.move(this._controller.movement, this._controller.rotation, delta, this._mapData)

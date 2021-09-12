@@ -13,32 +13,23 @@ export class Renderer {
 
         this.projectiles = [];
 
-        this.buildScene();
-        //this.addJozsi_proto();
-
-        this.portals = [
-            this.createPortal(0),
-            this.createPortal(1)
-        ];
 
         this.portalPositions = [
             {
                 x: 0,
                 y: 0,
                 z: 0,
-                side: 0
+                side: 0,
+                visible: false
             },
             {
                 x: 0,
                 y: 0,
                 z: 0,
-                side: 0
+                side: 0,
+                visible: false
             }
         ]
-
-
-
-
 
         this.cssProperties =
             {
@@ -51,32 +42,53 @@ export class Renderer {
 
     }
 
+    loadMap(mapData)
+    {
+        //this._scene = this.buildMap(this.buildPortalMap(mapData,1 ,3));
+        this._scene = this.buildMap(mapData);
+        this._camera.innerHTML =  '';
+        this._camera.appendChild(this._scene);
+
+    }
+
+    createPortals()
+    {
+        this.portals = [
+            this.createPortal(0),
+            this.createPortal(1)
+        ];
+
+    }
+
     createPortal(type)
     {
-        const elem = document.createElement('iframe');
-        elem.className = 'portalV2 ' + (type === 0 ? 'portalBlue' : 'portalOrange');
+        const elem = document.createElement('div');
+        elem.className = 'portalV2 camera' + (type === 0 ? 'portalBlue' : 'portalOrange');
         this._scene.appendChild(elem);
         elem.hidden = true;
 
         const this2 = this;
 
+        /*
         elem.onload = function(){
             this.contentWindow.document.body.appendChild(this2._camera.cloneNode(true));
             this.contentWindow.document.body.appendChild(document.getElementById('styles').cloneNode(true));
 
-        }
+        }*/
 
 
         return elem;
     }
 
-    placePortal(id, pos, angle)
+    placePortal(id, pos, angle, mapData, portalOther)
     {
         const portal = this.portals[id];
-        portal.style.setProperty('--x', Tools.posToCSS(pos.x));
-        portal.style.setProperty('--y', Tools.posToCSS(-pos.y));
+        portal.style.setProperty('--x', Tools.posToCSS(pos.x + 1 - .05));
+        portal.style.setProperty('--y', Tools.posToCSS(-pos.y - 2 + .15));
         portal.style.setProperty('--z', Tools.posToCSS(pos.z));
         portal.hidden = false;
+
+
 
         this.portalPositions[id].x = pos.x;
         this.portalPositions[id].y = pos.y;
@@ -102,52 +114,73 @@ export class Renderer {
                 break;
 
         }
+       /* portal.innerHTML = '';
+
+        const or = portalOther.side;
+
+        console.log(portalOther.rotY, or, or < 2 ? portalOther.pos.x : portalOther.pos.z);
+        const mapElem = this.buildMap(this.buildPortalMap(mapData, or, or < 2 ? portalOther.pos.x : portalOther.pos.z));
+        portal.appendChild(mapElem);*/
     }
 
-
-    buildScene() {
-        this._scene = document.createElement('div')
-        this._scene.className = 'scene';
-        this._camera.appendChild(this._scene);
-
-    }
-
-    addPortal_proto()
+    refrestPortalInsides(portals, mapData)
     {
-        const portal = document.createElement('iframe');
-        portal.src = 'index.html?5';
-        portal.className = 'portal';
-        this._scene.appendChild(portal);
+        this.portals[0].innerHTML = '';
+        const inside0 = this.buildMap(this.buildPortalMap(mapData, portals[1].side, portals[1].side >= 2 ? portals[1].pos.x : portals[1].pos.z));
+        this.portals[0].appendChild(inside0);
+        this.portals[0].firstChild.style.setProperty('--x', Tools.posToCSS(-portals[1].pos.x - 1 + (innerHeight / 200)));
+        this.portals[0].firstChild.style.setProperty('--y', Tools.posToCSS(portals[1].pos.y + 1));
+        this.portals[0].firstChild.style.setProperty('--z', Tools.posToCSS(-portals[1].pos.z - .5));
+        this.portals[0].firstChild.style.setProperty('--rotX', [.5, 0, .75 , .25][portals[1].side] + 'turn');
+
+        this.portals[1].innerHTML = '';
+        const inside1 = this.buildMap(this.buildPortalMap(mapData, portals[0].side, portals[0].side >= 2 ? portals[0].pos.x : portals[0].pos.z));
+        this.portals[1].appendChild(inside1);
+        this.portals[1].firstChild.style.setProperty('--x', Tools.posToCSS(-portals[0].pos.x - 1 + (innerHeight / 200)));
+        this.portals[1].firstChild.style.setProperty('--y', Tools.posToCSS(portals[0].pos.y + 1));
+        this.portals[1].firstChild.style.setProperty('--z', Tools.posToCSS(-portals[0].pos.z - .5));
+        this.portals[1].firstChild.style.setProperty('--rotX', [.5, 0, .75 , .25][portals[0].side] + 'turn');
+
     }
 
-    addJozsi_proto()
+    buildPortalMap(mapData, orientation, position)
     {
-        const portal = document.createElement('div');
+        console.log('Orientation: ', orientation);
+        const tempData = new MapData([[[]]], mapData.startingPosition);
+        tempData.size = mapData.size;
+        const size = mapData.size;
+        for (let x = 0; x < size.x; ++x) {
+            tempData.blocks[x] = [];
+            for (let y = 0; y < size.y; ++y) {
+                tempData.blocks[x][y] = [];
+                for (let z = 0; z < size.z; ++z) {
 
-        portal.className = 'jozsi';
-        this._scene.appendChild(portal);
-    }
+                    if((orientation === 3 && x > position) ||
+                        (orientation === 2 && x < position) ||
+                        (orientation === 1 && z > position) ||
+                        (orientation === 0 && z < position) ||
+                        (orientation === 4 && y < position) ||
+                        (orientation === 5 && y > position))
 
-    buildMap_proto(mapData) {
-        const blocks = mapData.blocks;
-        for (let x = 0; x < blocks.length; ++x) {
-            for (let y = 0; y < blocks[x].length; ++y) {
-                for (let z = 0; z < blocks[x][y].length; ++z) {
-                    if (blocks[x][y][z] === MapData.BLOCK_WALL) {
-                        const face = document.createElement('div');
-                        face.className = 'face';
-                        face.style.setProperty('--x', (x * 100) + 'px');
-                        face.style.setProperty('--y', -(y * 100) + 'px');
-                        face.style.setProperty('--z', -(z * 100) + 'px');
-                        this._scene.appendChild(face);
-                    }
+
+                        tempData.blocks[x][y][z] = mapData.blockAt(x,y,z);
+
+                    else
+                        tempData.blocks[x][y][z] = MapData.BLOCK_VOID;
 
                 }
             }
         }
+
+        return tempData;
+
     }
 
     buildMap(mapData) {
+
+        const scene = document.createElement('div')
+        scene.className = 'scene';
+
         const blocks = mapData.blocks;
         const size = mapData.size;
         const sideRendered = [];
@@ -222,7 +255,8 @@ export class Renderer {
                                         break loopA;
                                     }
                                 }
-                            this.renderSide(x, y, z, width, height, i);
+                            const side = this.renderSide(x, y, z, width, height, i);
+                            scene.appendChild(side);
 
                         }
 
@@ -230,6 +264,8 @@ export class Renderer {
                 }
             }
         }
+
+        return scene;
 
 
     }
@@ -386,9 +422,11 @@ export class Renderer {
 
         side.style.setProperty('--width', (width * 100) + 'px');
         side.style.setProperty('--height', (height * 100) + 'px');
-        this._scene.appendChild(side);
+
 
         side.setAttribute('side', String(orientation));
+
+        return side;
 
     }
 
@@ -434,14 +472,45 @@ export class Renderer {
                 py: 0,
                 p: 0
             }
-            const camera = this.portals[i].contentWindow.document.getElementById('camera');
+            const camera = this.portals[i];
+            let distX;
+            let distY;
+            let distZ;
             switch(this.portalPositions[i].side)
             {
                 case 0:
 
+                    /*
                     dif.px = -(this.cssProperties.x - .5 - this.portalPositions[i].x);
                     dif.py = -(this.cssProperties.y - 2 - this.portalPositions[i].y);
                     dif.p = Math.abs(this.portalPositions[i].z - this.cssProperties.z);
+                    */
+
+                    distX = (this.portalPositions[i].x + 1) - this.cssProperties.x
+                    distY = (this.portalPositions[i].y + 2) - this.cssProperties.y
+                    distZ = this.portalPositions[i].z - this.cssProperties.z;
+                    dif.px = distX;// + (140/300);
+                    dif.py = distY;// + (140/300);
+                    dif.p = distZ;
+
+
+                    break;
+
+                case 1:
+
+                    /*
+                    dif.px = -(this.cssProperties.x - .5 - this.portalPositions[i].x);
+                    dif.py = -(this.cssProperties.y - 2 - this.portalPositions[i].y);
+                    dif.p = Math.abs(this.portalPositions[i].z - this.cssProperties.z);
+                    */
+
+                    distX = (this.portalPositions[i].x + 1) - this.cssProperties.x
+                    distY = (this.portalPositions[i].y + 2) - this.cssProperties.y
+                    distZ = this.cssProperties.z - (this.portalPositions[i].z + 1) ;
+                    dif.px = -distX + 1;// + (140/300);
+                    dif.py = distY;// + (140/300);
+                    dif.p = distZ;
+
 
                     break;
             }
@@ -449,8 +518,9 @@ export class Renderer {
 
             if(camera)
             {
-                camera.style.perspectiveOrigin = Tools.posToCSS(dif.px * 3) + ' ' + Tools.posToCSS(dif.py * 3);
-                camera.style.perspective = Tools.posToCSS(dif.p * 3);
+                camera.style.perspectiveOrigin = Tools.posToCSS((dif.px)) + ' ' + Tools.posToCSS(dif.py);
+                camera.style.perspective = Tools.posToCSS(dif.p);
+                //camera.style.setProperty('--perspective', Tools.posToCSS(dif.p));
             }
 
 
@@ -472,7 +542,7 @@ export class Renderer {
 
         elem.className = 'projectile ' + extraClass;
         elem.style.setProperty('--x', Tools.posToCSS(pos.x));
-        elem.style.setProperty('--y', Tools.posToCSS(pos.y));
+        elem.style.setProperty('--y', Tools.posToCSS((pos.y)));
         elem.style.setProperty('--z', Tools.posToCSS(pos.z));
         elem.style.setProperty('--rotX', -rot.x + 'rad');
         elem.style.setProperty('--rotY', -rot.y + 'rad');

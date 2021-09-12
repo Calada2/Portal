@@ -15,7 +15,7 @@ body
     top: 0;
     left: 0;
 }
-#camera
+.camera
 {
     --x: 0;
     --y: 250px;
@@ -27,7 +27,7 @@ body
     perspective: var(--perspective);
     overflow: hidden;
 }
-#camera .scene
+.camera .scene
 {
     position: absolute;
     top: 0;
@@ -163,15 +163,21 @@ body
 .portalV2
 {
     --rot: 0;
-    width: 280px;
-    height: 560px;
+    width: 90px;
+    height: 190px;
     position: absolute;
     border-radius: 50%;
     left: calc(50% - 140px);
     bottom: calc(50% - 130px);
     background: #e7e7e7;
-    transform: translate3d(var(--x),var(--y),var(--z)) translate3d(50px, 50px, 50px) rotateY(var(--rot)) translateZ(51px) scale(.33333333);
+    transform: translate3d(var(--x),var(--y),var(--z)) translate3d(50px, 50px, 50px) rotateY(var(--rot)) translateZ(51px) ;
     border: none;
+    overflow: hidden;
+}
+.portalV2 .scene
+{
+    --rotX: .5turn;
+    --rotY: 0;
 }
 .portalBlue
 {
@@ -244,4 +250,13 @@ body
 .f3pos
 {
     text-align: left;
+}
+
+#f3
+{
+    position: absolute;
+    top: 60px;
+    font-family: Arial;
+    color: cyan;
+    text-shadow: #170E1F 1px 1px 0;
 }

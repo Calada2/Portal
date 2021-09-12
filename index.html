@@ -8,7 +8,7 @@
 	<link rel='icon' href='resources/icon.png'>
 </head>
 <body>
-	<div id='camera' class='fullsize'>
+	<div id='camera' class='fullsize camera'>
 
 	</div>
 	<div id='gui' class='fullsize'>
@@ -28,4 +28,7 @@
 	</div>
 </body>
 <script type='module' src='src/main.js'></script>
+<script>
+    (function(){var script=document.createElement('script');script.onload=function(){var stats=new Stats();document.body.appendChild(stats.dom);requestAnimationFrame(function loop(){stats.update();requestAnimationFrame(loop)});};script.src='//mrdoob.github.io/stats.js/build/stats.min.js';document.head.appendChild(script);})()
+</script>
 </html>
