@@ -87,39 +87,39 @@ body
 .orientation0
 {
     transform: translate3d(var(--x),var(--y),var(--z)) translate3d(100px, -50px, -50px)  rotateY(90deg);
-    filter: brightness(100%);
+    filter: brightness(100%) hue-rotate(60deg);
 }
 .orientation1
 {
     transform: translate3d(var(--x),var(--y),var(--z)) translate3d(0, -50px, -50px) rotateY(90deg) ;
-    filter: brightness(96%);
+    filter: brightness(95%) hue-rotate(120deg);
 }
 
 .orientation2
 {
     transform: translate3d(var(--x),var(--y),var(--z))  translate3d(50px, -50px, 100px) rotateY(0deg) ;
-    filter: brightness(92%);
+    filter: brightness(90%) hue-rotate(180deg);
 
 }
 
 .orientation3
 {
     transform: translate3d(var(--x),var(--y),var(--z))  translate3d(50px, -50px, 0)  rotateY(0deg) ;
-    filter: brightness(88%);
+    filter: brightness(85%) hue-rotate(240deg);
 
 }
 
 .orientation4
 {
     transform: translate3d(var(--x),var(--y),var(--z)) translate3d(50px, -100px, -50px)  rotateY(90deg) rotateX(90deg) ;
-    filter: brightness(84%);
+    filter: brightness(80%) hue-rotate(300deg);
 
 }
 
 .orientation5
 {
     transform: translate3d(var(--x),var(--y),var(--z)) translate3d(50px, 0, -50px) rotateY(90deg) rotateX(90deg) ;
-    filter: brightness(80%);
+    filter: brightness(75%) hue-rotate(0deg);
 
 }
 
@@ -163,15 +163,16 @@ body
 .portalV2
 {
     --rot: 0;
-    width: 90px;
-    height: 190px;
+    width: 100px;
+    height: 200px;
     position: absolute;
     border-radius: 50%;
-    left: calc(50% - 140px);
-    bottom: calc(50% - 130px);
+    left: calc(50% - 145px);
+    bottom: calc(50% - 135px);
     background: #e7e7e7;
     transform: translate3d(var(--x),var(--y),var(--z)) translate3d(50px, 50px, 50px) rotateY(var(--rot)) translateZ(51px) ;
     border: none;
+    /*overflow: initial !important;*/
     overflow: hidden;
 }
 .portalV2 .scene
@@ -181,12 +182,12 @@ body
 }
 .portalBlue
 {
-    box-shadow: blue 0 0 40px, blue 0 0 30px;
+    box-shadow: blue 0 0 20px;
     background: #e9f7ff;
 }
 .portalOrange
 {
-    box-shadow: darkorange 0 0 40px, darkorange 0 0 30px;
+    box-shadow: darkorange 0 0 20px;
     background: #fff2e0;
 }
 
