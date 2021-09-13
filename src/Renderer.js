@@ -106,56 +106,11 @@ export class Renderer {
                 break;
 
         }
-       /* portal.innerHTML = '';
 
-        const or = portalOther.side;
-
-        console.log(portalOther.rotY, or, or < 2 ? portalOther.pos.x : portalOther.pos.z);
-        const mapElem = this.buildMap(this.buildPortalMap(mapData, or, or < 2 ? portalOther.pos.x : portalOther.pos.z));
-        portal.appendChild(mapElem);*/
     }
 
     refrestPortalInsides(portals, mapData)
     {
-        /*this.portals[0].innerHTML = '';
-        const inside0 = this.buildMap(this.buildPortalMap(mapData, portals[1].side, portals[1].side >= 2 ? portals[1].pos.x : portals[1].pos.z));
-        this.portals[0].appendChild(inside0);
-
-
-        if(portals[1].side === 2)
-        {
-            this.portals[0].firstChild.style.setProperty('--x', Tools.posToCSS(-portals[1].pos.x + 0 - (innerHeight / 200)));
-            this.portals[0].firstChild.style.setProperty('--y', Tools.posToCSS(portals[1].pos.y + 1));
-            this.portals[0].firstChild.style.setProperty('--z', Tools.posToCSS(-portals[1].pos.z - .5));
-        }
-        else if(portals[1].side === 3)
-        {
-            this.portals[0].firstChild.style.setProperty('--x', Tools.posToCSS(-portals[1].pos.x - 1 + (innerHeight / 200)));
-            this.portals[0].firstChild.style.setProperty('--y', Tools.posToCSS(portals[1].pos.y + 1));
-            this.portals[0].firstChild.style.setProperty('--z', Tools.posToCSS(-portals[1].pos.z - .5));
-        }
-
-        this.portals[0].firstChild.style.setProperty('--rotX', [.5, 0, .75 , .25][portals[1].side] + 'turn');
-
-        this.portals[1].innerHTML = '';
-        const inside1 = this.buildMap(this.buildPortalMap(mapData, portals[0].side, portals[0].side >= 2 ? portals[0].pos.x : portals[0].pos.z));
-        this.portals[1].appendChild(inside1);
-
-        if(portals[0].side === 2)
-        {
-            this.portals[1].firstChild.style.setProperty('--x', Tools.posToCSS(-portals[0].pos.x + 0 - (innerHeight / 200)));
-            this.portals[1].firstChild.style.setProperty('--y', Tools.posToCSS(portals[0].pos.y + 1));
-            this.portals[1].firstChild.style.setProperty('--z', Tools.posToCSS(-portals[0].pos.z - .5));
-        }
-        else if(portals[0].side === 3)
-        {
-            this.portals[1].firstChild.style.setProperty('--x', Tools.posToCSS(-portals[0].pos.x - 1 + (innerHeight / 200)));
-            this.portals[1].firstChild.style.setProperty('--y', Tools.posToCSS(portals[0].pos.y + 1));
-            this.portals[1].firstChild.style.setProperty('--z', Tools.posToCSS(-portals[0].pos.z - .5));
-        }
-
-        this.portals[1].firstChild.style.setProperty('--rotX', [.5, 0, .75 , .25][portals[0].side] + 'turn');*/
-
 
         for(let i = 0; i <= 1; ++i)
         {
@@ -198,7 +153,6 @@ export class Renderer {
 
     buildPortalMap(mapData, orientation, position)
     {
-        console.log('Orientation: ', orientation);
         const tempData = new MapData([[[]]], mapData.startingPosition);
         tempData.size = mapData.size;
         const size = mapData.size;
@@ -533,12 +487,6 @@ export class Renderer {
             {
                 case 0:
 
-                    /*
-                    dif.px = -(this.cssProperties.x - .5 - this.portalPositions[i].x);
-                    dif.py = -(this.cssProperties.y - 2 - this.portalPositions[i].y);
-                    dif.p = Math.abs(this.portalPositions[i].z - this.cssProperties.z);
-                    */
-
                     distX = (this.portalPositions[i].x + 1) - this.cssProperties.x
                     distY = (this.portalPositions[i].y + 2) - this.cssProperties.y
                     distZ = this.portalPositions[i].z - this.cssProperties.z;
@@ -550,12 +498,6 @@ export class Renderer {
                     break;
 
                 case 1:
-
-                    /*
-                    dif.px = -(this.cssProperties.x - .5 - this.portalPositions[i].x);
-                    dif.py = -(this.cssProperties.y - 2 - this.portalPositions[i].y);
-                    dif.p = Math.abs(this.portalPositions[i].z - this.cssProperties.z);
-                    */
 
                     distX = (this.portalPositions[i].x + 1) - this.cssProperties.x
                     distY = (this.portalPositions[i].y + 2) - this.cssProperties.y

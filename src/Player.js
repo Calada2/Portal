@@ -27,13 +27,10 @@ export class Player
 
         const incrementX = moveVector.x * (delta / 500);
         const incrementZ = moveVector.y * (delta / 500);
-        //const incrementY = (delta / 500);//movement.y * (delta / 700)
-       /* this.x += moveVector.x * (delta / 700);
-        this.z += moveVector.y * (delta / 700);*/
+
 
         this.aY = this.aY - (delta / 7000);
 
-        //if(mapData.blockAt(Math.floor(this.x + incrementX), Math.floor(this.y), Math.floor(this.z)) !== MapData.BLOCK_WALL)
         if(this.checkCollision(mapData, this.x + incrementX, this.y, this.z))
             this.x += incrementX;
 
@@ -105,30 +102,25 @@ export class Player
             {
                 distX = portals[j].pos.x - this.x;
                 distZ = (portals[j].pos.z) - this.z;
-                console.log(pSide, this.z, pPos.z, this.x, pPos.x);
 
                 if(pSide === 0 && pPos.z - this.z < .24 && this.x >= pPos.x && this.x <= pPos.x + 1)
                 {
                     distY = p2Pos.y - (this.y - 1.5);
-                    console.log('Can definetely Cross ' + i, distX, distZ);
                     canCross = true;
                 }
                 else if(pSide === 1 && this.z - (pPos.z + 1) < .24 && this.x >= pPos.x && this.x <= pPos.x + 1)
                 {
                     distY = p2Pos.y - (this.y - 1.5);
-                    console.log('Can definetely Cross ' + i, distX, distZ);
                     canCross = true;
                 }
                 else if(pSide === 2 && (pPos.x) - this.x < .24 && this.z >= pPos.z && this.z <= pPos.z + 1)
                 {
                     distY = p2Pos.y - (this.y - 1.5);
-                    console.log('Can definetely Cross ' + i, distX, distZ);
                     canCross = true;
                 }
                 else if(pSide === 3 && this.x - (pPos.x + 1)  < .24 && this.z >= pPos.z && this.z <= pPos.z + 1)
                 {
                     distY = p2Pos.y - (this.y - 1.5);
-                    console.log('Can definetely Cross ' + i, distX, distZ);
                     canCross = true;
                 }
 
@@ -137,11 +129,6 @@ export class Player
 
             if(canCross)
             {
-                /*if(p2Side === pSide)
-                {
-                    angleChange = Math.PI
-                }*/
-
                 angleChange = angles[p2Side] - angles[pSide] + Math.PI;
 
                 if(p2Side === 0)
