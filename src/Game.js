@@ -76,11 +76,43 @@ export class Game
 
     }
 
-    placePortal(type, block, side)
+    placePortal(type, block, side, mapData)
     {
-        this._portals[type].updatePosition(block, side);
-        this._renderer.placePortal(type, block, side, this._mapData, this._portals[type !== Portal.TYPE_BLUE ? Portal.TYPE_BLUE : Portal.TYPE_ORANGE]);
-        this._renderer.refrestPortalInsides(this._portals, this._mapData)
+        let canPlace = false;
+        if(mapData.blockAt(block.x, block.y + 1, block.z) === MapData.BLOCK_WALL)
+        {
+            const j = type ? 0 : 1;
+            if(!(this._portals[j].side === side && this._portals[j].pos.x === block.x && this._portals[j].pos.z === block.z && Math.abs(this._portals[j].pos.y - block.y) <= 1))
+            {
+                let xN = 0;
+                let zN = 0;
+                if(side === 0)
+                    zN = -1;
+                else if(side === 1)
+                    zN = 1;
+                else if(side === 2)
+                    xN = -1;
+                else if(side === 3)
+                    xN = 1;
+
+                const before1 = mapData.blockAt(block.x + xN, block.y, block.z + zN);
+                const before2 = mapData.blockAt(block.x + xN, block.y + 1, block.z + zN);
+                if(before1 === before2 && (before1 === MapData.BLOCK_EMPTY || before1 === MapData.BLOCK_VOID))
+                {
+                    canPlace = true;
+                }
+            }
+
+
+            //canPlace = true;
+        }
+        if(canPlace)
+        {
+            this._portals[type].updatePosition(block, side);
+            this._renderer.placePortal(type, block, side, this._mapData, this._portals[type !== Portal.TYPE_BLUE ? Portal.TYPE_BLUE : Portal.TYPE_ORANGE]);
+            this._renderer.refrestPortalInsides(this._portals, this._mapData)
+        }
+
     }
 
     loop()
@@ -90,7 +122,7 @@ export class Game
         const delta = Math.min(1000, currentTimestamp - this._previousTimestamp);
         this._previousTimestamp = currentTimestamp;
 
-        this._player.move(this._controller.movement, this._controller.rotation, delta, this._mapData)
+        this._player.move(this._controller.movement, this._controller.rotation, delta, this._mapData, this._portals)
         this._controller.resetRotation();
         this._renderer.updatePosition(this._player.getProperties());
 
@@ -104,7 +136,7 @@ export class Game
             {
                 if(proj.portalSide > -1 && proj.type !== Projectile.TYPE_SHURIKEN)
                 {
-                    this.placePortal(proj.type, proj.currentBlock, proj.portalSide);
+                    this.placePortal(proj.type, proj.currentBlock, proj.portalSide, this._mapData);
                 }
 
                 console.log(proj.portalSide);
